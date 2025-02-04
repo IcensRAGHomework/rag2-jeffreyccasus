@@ -5,7 +5,7 @@ from langchain_text_splitters import (CharacterTextSplitter,
 q1_pdf = "OpenSourceLicenses.pdf"
 q2_pdf = "勞動基準法.pdf"
 
-
+# HW1
 def hw02_1(q1_pdf):
   # load pdf
   loader = PyPDFLoader(q1_pdf)
@@ -21,5 +21,25 @@ def hw02_1(q1_pdf):
 
   return docs[page_count-1]
 
+# HW2
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
+
 def hw02_2(q2_pdf):
-    pass
+  # load pdf
+  loader = PyPDFLoader(q2_pdf)
+  documents = loader.load()
+  print(documents)
+
+  # RecursiveCharacterTextSplitter
+  recursive_text_splitter = RecursiveCharacterTextSplitter(
+      chunk_size = 500,
+      chunk_overlap  = 0,
+      separators=["法規名稱：", "修正日期：", "\n   第 ", "\n第 "],
+  )
+
+  recursive_splitted_texts = recursive_text_splitter.split_documents(documents)
+
+  print(f'len of recursive_splitted_texts: {len(recursive_splitted_texts)}')
+
+  return len(recursive_splitted_texts)
