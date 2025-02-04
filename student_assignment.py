@@ -22,8 +22,11 @@ def hw02_1(q1_pdf):
   return docs[page_count-1]
 
 # HW2
-#from langchain_community.document_loaders import PyMuPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
+from langchain_core.documents import Document
+
 
 def print_spit_docs(doc_array):
   for chunk in doc_array:
@@ -33,10 +36,10 @@ def print_spit_docs(doc_array):
 
 def hw02_2(q2_pdf):
   # load pdf
-  loader = PyPDFLoader(q2_pdf, mode = "single")
+  loader = PyMuPDFLoader(q2_pdf, mode = "single")
   documents = loader.load()
-  print(documents)
-  print("\n")
+  #print(documents)
+  #print("\n")
 
   # RecursiveCharacterTextSplitter
   recursive_text_splitter = RecursiveCharacterTextSplitter(
@@ -49,7 +52,8 @@ def hw02_2(q2_pdf):
   split_texts = recursive_text_splitter.split_documents(documents)
 
   # debug
-  #print_spit_docs(split_texts)
+  print_spit_docs(split_texts)
+
 
   print(f'\nlen of split_texts: {len(split_texts)}')
   return len(split_texts)
