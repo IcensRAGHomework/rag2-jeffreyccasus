@@ -22,24 +22,34 @@ def hw02_1(q1_pdf):
   return docs[page_count-1]
 
 # HW2
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
+
+def print_spit_docs(doc_array):
+  for chunk in doc_array:
+    #print(f"Chunk size: {len(chunk)}")
+    print(chunk.page_content)
+    print("\n")
 
 def hw02_2(q2_pdf):
   # load pdf
-  loader = PyPDFLoader(q2_pdf)
+  loader = PyMuPDFLoader(q2_pdf, mode = "single")
   documents = loader.load()
   print(documents)
+  print("\n")
 
   # RecursiveCharacterTextSplitter
   recursive_text_splitter = RecursiveCharacterTextSplitter(
-      chunk_size = 500,
+      chunk_size = 100,
       chunk_overlap  = 0,
-      separators=["法規名稱：", "修正日期：", "\n   第 ", "\n第 "],
+      is_separator_regex = True,
+      separators=["法規名稱：", "\n   第 ", "\n第 "],
   )
 
-  recursive_splitted_texts = recursive_text_splitter.split_documents(documents)
+  split_texts = recursive_text_splitter.split_documents(documents)
 
-  print(f'len of recursive_splitted_texts: {len(recursive_splitted_texts)}')
+  # debug
+  #print_spit_docs(split_texts)
 
-  return len(recursive_splitted_texts)
+  print(f'\nlen of split_texts: {len(split_texts)}')
+  return len(split_texts)
