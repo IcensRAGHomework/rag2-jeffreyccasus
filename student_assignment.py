@@ -25,19 +25,14 @@ def hw02_1(q1_pdf):
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
 
-def print_spit_text(text_array):
-  for chunk in text_array:
-    #print(f"Chunk size: {len(chunk)}")
-    print(chunk)
-    print("\n")
-
 def hw02_2(q2_pdf):
   # load pdf
-  loader = PyMuPDFLoader(q2_pdf, mode = "single")
-  #loader = PyPDFLoader(q2_pdf)
+  loader = PyPDFLoader(q2_pdf)
   documents = loader.load()
-  #print(documents)
-  #print("\n")
+  print(documents)
+  print("\n")
+
+  # Combine texts in each page to one big string
   all_text = ""
   for one_page in documents:
     all_text = all_text + one_page.page_content
@@ -50,12 +45,7 @@ def hw02_2(q2_pdf):
       separators=["法規名稱：", r"第 .+ 章","第 .+ 條"],
   )
 
-  #split_texts = recursive_text_splitter.split_documents(documents)
   split_texts = recursive_text_splitter.split_text(all_text)
-
-  # debug
-  print_spit_text(split_texts)
-
 
   print(f'\nlen of split_texts: {len(split_texts)}')
   return len(split_texts)
