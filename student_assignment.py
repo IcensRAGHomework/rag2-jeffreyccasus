@@ -23,36 +23,38 @@ def hw02_1(q1_pdf):
 
 # HW2
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
-from langchain_core.documents import Document
 
-
-def print_spit_docs(doc_array):
-  for chunk in doc_array:
+def print_spit_text(text_array):
+  for chunk in text_array:
     #print(f"Chunk size: {len(chunk)}")
-    print(chunk.page_content)
+    print(chunk)
     print("\n")
 
 def hw02_2(q2_pdf):
   # load pdf
   loader = PyMuPDFLoader(q2_pdf, mode = "single")
+  #loader = PyPDFLoader(q2_pdf)
   documents = loader.load()
   #print(documents)
   #print("\n")
+  all_text = ""
+  for one_page in documents:
+    all_text = all_text + one_page.page_content
 
   # RecursiveCharacterTextSplitter
   recursive_text_splitter = RecursiveCharacterTextSplitter(
-      chunk_size = 100,
+      chunk_size = 10,
       chunk_overlap  = 0,
       is_separator_regex = True,
-      separators=["法規名稱：", "\n   第 ", "\n第 "],
+      separators=["法規名稱：", r"第 .+ 章","第 .+ 條"],
   )
 
-  split_texts = recursive_text_splitter.split_documents(documents)
+  #split_texts = recursive_text_splitter.split_documents(documents)
+  split_texts = recursive_text_splitter.split_text(all_text)
 
   # debug
-  print_spit_docs(split_texts)
+  print_spit_text(split_texts)
 
 
   print(f'\nlen of split_texts: {len(split_texts)}')
