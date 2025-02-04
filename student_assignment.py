@@ -13,7 +13,7 @@ def hw02_1(q1_pdf):
   print("Pages in the original document: ", len(documents))
 
   # CharacterTextSplitter
-  text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+  text_splitter = CharacterTextSplitter(separator="\n\n", chunk_overlap=0)
   docs = text_splitter.split_documents(documents)
   page_count = len(docs)
   print("Length of chunks after splitting pages: ", len(docs))
