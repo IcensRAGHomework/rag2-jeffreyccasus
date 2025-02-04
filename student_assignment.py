@@ -39,7 +39,7 @@ def hw02_2(q2_pdf):
 
   # RecursiveCharacterTextSplitter
   recursive_text_splitter = RecursiveCharacterTextSplitter(
-      chunk_size = 10,
+      chunk_size = 50,
       chunk_overlap  = 0,
       is_separator_regex = True,
       separators=["法規名稱：", r"第 .+ 章","第 .+ 條"],
