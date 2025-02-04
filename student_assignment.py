@@ -19,7 +19,7 @@ def hw02_1(q1_pdf):
   print("Length of chunks after splitting pages: ", len(docs))
   print("the last page", docs[page_count-1])
 
-  return docs[page_count-1
+  return docs[page_count-1]
 
 def hw02_2(q2_pdf):
     pass
