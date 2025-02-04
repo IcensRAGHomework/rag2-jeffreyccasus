@@ -39,20 +39,24 @@ def hw02_2(q2_pdf):
   # Combine texts in each page to one big string
   all_text = ""
   for one_page in documents:
-    all_text = all_text + one_page.page_content
+    all_text = all_text + "\n" +one_page.page_content
 
   # RecursiveCharacterTextSplitter
   recursive_text_splitter = RecursiveCharacterTextSplitter(
       chunk_size = 50,
       chunk_overlap  = 0,
       is_separator_regex = True,
-      separators=["法規名稱：", r"第 .+ 章", r"第 .+ 條"],
+      separators=["法規名稱：", r"第 .+ 章", r"\n第 .+ 條"],
   )
 
   split_texts = recursive_text_splitter.split_text(all_text)
 
   # debug
-  print_spit_text(split_texts)
+  #print_spit_text(split_texts)
+
+
+  print(f'\nlen of split_texts: {len(split_texts)}')
+  return len(split_texts)
 
 
   print(f'\nlen of split_texts: {len(split_texts)}')
