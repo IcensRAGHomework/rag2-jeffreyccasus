@@ -22,7 +22,7 @@ def hw02_1(q1_pdf):
   return docs[page_count-1]
 
 # HW2
-from langchain_community.document_loaders import PyMuPDFLoader
+#from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import (CharacterTextSplitter, RecursiveCharacterTextSplitter)
 
 def print_spit_docs(doc_array):
@@ -33,7 +33,7 @@ def print_spit_docs(doc_array):
 
 def hw02_2(q2_pdf):
   # load pdf
-  loader = PyMuPDFLoader(q2_pdf, mode = "single")
+  loader = PyPDFLoader(q2_pdf, mode = "single")
   documents = loader.load()
   print(documents)
   print("\n")
